@@ -15,9 +15,21 @@ defmodule BorshEx.Schema do
       end
 
       def deserialize(bitstring) do
+        {object, rest} =
+          BorshEx.Deserializer.deserialize_field(
+            {struct(__MODULE__), bitstring},
+            {nil, __MODULE__}
+          )
+
+        if byte_size(rest) == 0 do
+          {:ok, object}
+        else
+          {:error, object, rest}
+        end
       end
 
       def serialize(object) do
+        BorshEx.Serializer.serialize_field({<<>>, object}, {nil, __MODULE__})
       end
     end
   end
