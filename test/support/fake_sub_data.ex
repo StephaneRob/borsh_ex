@@ -3,7 +3,7 @@ defmodule BorshEx.FakeSubData do
 
   defstruct a: nil, b: nil, c: nil, d: nil, e: nil, f: nil, g: nil, h: nil, i: nil, j: nil, k: nil
 
-  schema do
+  borsh_schema do
     field :a, "string"
     field :b, "u64"
     field :c, "u8"

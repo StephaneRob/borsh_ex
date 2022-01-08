@@ -1,7 +1,7 @@
 defmodule BorshEx.Schema do
   defmacro __using__(_) do
     quote do
-      import BorshEx.Schema, only: [schema: 1, field: 2]
+      import BorshEx.Schema, only: [borsh_schema: 1, field: 2]
 
       Module.register_attribute(__MODULE__, :fields, accumulate: true)
       @before_compile unquote(__MODULE__)
@@ -34,7 +34,7 @@ defmodule BorshEx.Schema do
     end
   end
 
-  defmacro schema(do: block) do
+  defmacro borsh_schema(do: block) do
     quote do
       unquote(block)
     end

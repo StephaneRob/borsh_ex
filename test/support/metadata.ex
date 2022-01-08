@@ -2,7 +2,7 @@ defmodule BorshEx.Metadata.Creator do
   use BorshEx.Schema
   defstruct address: nil, verified: nil, share: nil
 
-  schema do
+  borsh_schema do
     field :address, {"array", {"u8", 32}}
     field :verified, "boolean"
     field :share, "u8"
@@ -13,7 +13,7 @@ defmodule BorshEx.Metadata.Data do
   use BorshEx.Schema
   defstruct name: nil, symbol: nil, uri: nil, seller_fee_basis_points: nil, creators: nil
 
-  schema do
+  borsh_schema do
     field :name, "string"
     field :symbol, "string"
     field :uri, "string"
@@ -44,7 +44,7 @@ defmodule BorshEx.Metadata do
     "EditionMarker"
   ]
 
-  schema do
+  borsh_schema do
     field :key, {"enum", @keys}
     field :update_authority, {"array", {"u8", 32}}
     field :mint, {"array", {"u8", 32}}

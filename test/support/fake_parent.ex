@@ -3,7 +3,7 @@ defmodule BorshEx.FakeParent do
 
   defstruct l: nil, b: nil
 
-  schema do
+  borsh_schema do
     field :l, "string"
     field :b, BorshEx.FakeData
   end
