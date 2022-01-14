@@ -1,4 +1,6 @@
 defmodule BorshEx.Deserializer do
+  @moduledoc false
+
   def deserialize_field({acc, bitstring}, {nil, module}) when is_atom(module) do
     Enum.reduce(module.fields(), {acc, bitstring}, fn field, acc ->
       deserialize_field(acc, field)

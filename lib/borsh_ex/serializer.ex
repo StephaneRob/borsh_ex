@@ -1,4 +1,6 @@
 defmodule BorshEx.Serializer do
+  @moduledoc false
+
   def serialize_field({acc, data}, {_, module}) when is_atom(module) do
     Enum.reduce(module.fields(), acc, fn {f, _} = field, acc ->
       data = Map.get(data, f)
