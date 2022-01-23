@@ -21,6 +21,22 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/borsh_ex](https://hexdocs.pm/borsh_ex).
 
+## Usage
+
+```elixir
+defmodule BorshEx.FakeData do
+  use BorshEx.Schema
+
+  defstruct a: nil, b: nil, c: nil
+
+  borsh_schema do
+    field :a, "u8"
+    field :b, "u64"
+    field :c, "string"
+  end
+end
+```
+
 ## Copyright and License
 
 Copyright (c) 2022, Stéphane Robino
