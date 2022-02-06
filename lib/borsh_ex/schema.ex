@@ -14,8 +14,32 @@ defmodule BorshEx.Schema do
       end
   """
 
+  @doc """
+  Serialize struct into a bitstring
+
+  #### Example
+      iex> fake_data = %FakeData{a: 255, b: 20, c: "123"}
+      iex> FakeData.serialize(fake_data)
+      <<255, 20, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 49, 50, 51>>
+  """
+  @callback serialize(struct :: struct()) :: bitstring()
+
+  @doc """
+  Deserialize bitstring into the struct
+
+  #### Example
+      iex> FakeData.deserialize(<<255, 20, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 49, 50, 51>>)
+      iex> {:ok, %FakeData{a: 255, b: 20, c: "123"}}
+
+      iex> FakeData.deserialize(<<255, 20, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 49, 50, 51, 87>>)
+      iex> {:error, %FakeData{a: 255, b: 20, c: "123"}, <<87>>}
+  """
+  @callback deserialize(bitstring :: bitstring()) ::
+              {:pk, struct()} | {:error, struct(), bitstring()}
+
   defmacro __using__(_) do
     quote do
+      @behaviour BorshEx.Schema
       import BorshEx.Schema, only: [borsh_schema: 1, field: 2]
 
       Module.register_attribute(__MODULE__, :fields, accumulate: true)
