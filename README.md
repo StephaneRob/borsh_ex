@@ -60,5 +60,5 @@ input should enforce appropriate payload and collection size limits.
 
 ## Copyright and License
 
-Copyright (c) 2022, Stéphane Robino
+Copyright (c) 2022-2026, Stéphane Robino
 This library is licensed under the BSD-2-Clause.
