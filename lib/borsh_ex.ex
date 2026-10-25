@@ -16,7 +16,7 @@ defmodule BorshEx do
 
       defmodule Data do
         use BorshEx.Schema
-        defstruct name: nil
+        defstruct id: nil, sub_data: nil
 
         borsh_schema do
           field :id, "u16"
@@ -29,7 +29,7 @@ defmodule BorshEx do
       iex> data = %Data{id: 45, sub_data: %SubData{address: "Hello world!"}}
       %Data{id: 45, sub_data: %SubData{address: "Hello world!"}}
 
-      iex> bistring = Data.serialize(data)
+      iex> bitstring = Data.serialize(data)
       <<45, 0, 12, 0, 0, 0, 72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33>>
 
       iex> data = Data.deserialize(bitstring)
@@ -38,7 +38,7 @@ defmodule BorshEx do
   In some case the bitstring is longer than necessary, some bytes are not used
 
       iex> bitstring = <<45, 0, 12, 0, 0, 0, 72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 5, 0>>
-      <<45, 0, 12, 0, 0, 0, 72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 10, 5, 0>>
+      <<45, 0, 12, 0, 0, 0, 72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 5, 0>>
 
       iex> data = Data.deserialize(bitstring)
       {:error, %Data{id: 45, sub_data: %SubData{address: "Hello world!"}}, <<5, 0>>}
@@ -51,7 +51,7 @@ defmodule BorshEx do
   | ------------------------- | --------------------- |
   | `u8`, `u16`, `u32`, `u64` | `field :id, "u8"`     |
   | `i8`, `i16`, `i32`, `i64` | `field :id, "i8"`     |
-  | `boolean`                 | `field :id, "bool"`   |
+  | `boolean`                 | `field :id, "boolean"` |
   | `string`                  | `field :id, "string"` |
   | `struct`                  | `field :id, MyStruct` |
 
@@ -76,7 +76,7 @@ defmodule BorshEx do
       # sub_data is a list of Subdata strut
       borsh_schema do
         field :ids, {"array", "u16"}
-        field :sub_data, {"array", {Subdata, 32}}
+        field :sub_data, {"array", Subdata}
       end
 
   ### Option

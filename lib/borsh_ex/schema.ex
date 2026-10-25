@@ -4,7 +4,7 @@ defmodule BorshEx.Schema do
 
   ## Example
       defmodule Data do
-        use BorshEx.Data
+        use BorshEx.Schema
         defstruct id: nil, sub_data: nil
 
         borsh_schema do
@@ -35,7 +35,7 @@ defmodule BorshEx.Schema do
       iex> {:error, %FakeData{a: 255, b: 20, c: "123"}, <<87>>}
   """
   @callback deserialize(bitstring :: bitstring()) ::
-              {:pk, struct()} | {:error, struct(), bitstring()}
+              {:ok, struct()} | {:error, struct(), bitstring()}
 
   defmacro __using__(_) do
     quote do
